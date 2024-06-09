@@ -1,9 +1,5 @@
 package main
 
-import (
-	"math"
-)
-
 type Node struct {
 	value    string
 	children []*Node
@@ -22,9 +18,6 @@ func CheckDuplicateIDs(root *Node) *Node {
 	queue := []Item{{node: root, depth: 0}}
 	nodeMap := make(map[string]int)
 
-	var shallowestDuplicateNode *Node
-	shallowestDepth := math.MaxInt
-
 	for len(queue) > 0 {
 		currentItem := queue[0]
 		queue = queue[1:]
@@ -32,10 +25,7 @@ func CheckDuplicateIDs(root *Node) *Node {
 		node, depth := currentItem.node, currentItem.depth
 
 		if _, exists := nodeMap[node.value]; exists {
-			if depth < shallowestDepth {
-				shallowestDuplicateNode = node
-				shallowestDepth = depth
-			}
+			return node
 		} else {
 			nodeMap[node.value] = depth
 		}
@@ -45,6 +35,5 @@ func CheckDuplicateIDs(root *Node) *Node {
 		}
 	}
 
-
-	return shallowestDuplicateNode
+	return nil
 }
